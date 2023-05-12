@@ -1,0 +1,12 @@
+specVersion: 0.35.0
+name: test
+runtime: python
+registry: dev.local
+image: dev.local/test:latest
+imageDigest: sha256:5f47614b27de7ff73824da50ef3eba6667d493fe9430e4653abb539308bd8338
+created: 2023-05-04T12:22:28.910535658+02:00
+build:
+  builder: pack
+  pvcSize: 256Mi
+deploy:
+  namespace: default

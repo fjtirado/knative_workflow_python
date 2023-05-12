@@ -1,0 +1,59 @@
+{
+  "id": "TensorTest",
+  "version": "1.0",
+  "name": "Workflow Knative example",
+  "description": "An example of how to invoke two python functions",
+  "start": "doIt",
+  "functions": [
+    {
+      "name": "initTensor",
+      "type": "custom",
+      "operation": "rest:get:http://test.default.10.101.12.197.sslip.io/?x={x}&y={y}"
+    },
+    {
+      "name": "receiveData",
+      "type": "custom",
+      "operation": "rest:post:http://receiver.default.10.101.12.197.sslip.io"
+    },
+    {
+      "name": "printMessage",
+      "type": "custom",
+       "operation": "sysout"
+    }
+  ],
+  "states": [
+    {
+      "name": "doIt",
+      "type": "operation",
+      "actions": [
+        {
+          "functionRef": {
+            "refName": "initTensor",
+            "arguments": {
+              "x": ".x",
+              "y": ".y"
+            }
+          }
+        },
+        {
+          "functionRef": {
+            "refName": "printMessage",
+            "arguments": {
+              "message": "\"Response is \\(.response)\"" 
+            }
+          }
+        },
+        {
+          "functionRef": {
+            "refName": "receiveData",
+            "arguments":".response"
+          }
+        }
+      ],
+      "end": true,
+      "stateDataFilter" : {
+          "output" : ".result"
+        }
+      }
+  ]
+}
