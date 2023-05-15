@@ -46,6 +46,18 @@
       <artifactId>kogito-quarkus-serverless-workflow</artifactId>
     </dependency>
     <dependency>
+      <groupId>org.kie.kogito</groupId>
+      <artifactId>kogito-addons-quarkus-knative-serving</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-kubernetes</artifactId>
+    </dependency>
+   <dependency>
+     <groupId>io.quarkus</groupId>
+     <artifactId>quarkus-container-image-jib</artifactId>
+    </dependency>
+    <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy</artifactId>
     </dependency>
@@ -53,7 +65,7 @@
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-resteasy-jackson</artifactId>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>org.kie.kogito</groupId>
       <artifactId>kogito-quarkus-serverless-workflow-devui</artifactId>
     </dependency>
@@ -61,6 +73,7 @@
       <groupId>org.kie.kogito</groupId>
       <artifactId>kogito-addons-quarkus-source-files</artifactId>
     </dependency>
+    -->
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-junit5</artifactId>
@@ -115,23 +128,6 @@
     </plugins>
   </build>
   <profiles>
-    <profile>
-      <id>container</id>
-      <activation>
-        <property>
-          <name>container</name>
-        </property>
-      </activation>
-      <properties>
-        <quarkus.profile>container</quarkus.profile>
-      </properties>
-      <dependencies>
-        <dependency>
-          <groupId>io.quarkus</groupId>
-          <artifactId>quarkus-container-image-jib</artifactId>
-        </dependency>
-      </dependencies>
-    </profile>
     <profile>
       <id>native</id>
       <activation>

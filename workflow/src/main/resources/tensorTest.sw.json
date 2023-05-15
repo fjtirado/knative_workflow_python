@@ -8,12 +8,12 @@
     {
       "name": "initTensor",
       "type": "custom",
-      "operation": "rest:get:http://test.default.10.101.12.197.sslip.io/?x={x}&y={y}"
+      "operation": "knative:services.v1.serving.knative.dev/test"
     },
     {
       "name": "receiveData",
       "type": "custom",
-      "operation": "rest:post:http://receiver.default.10.101.12.197.sslip.io"
+      "operation": "knative:services.v1.serving.knative.dev/receiver"
     },
     {
       "name": "printMessage",
