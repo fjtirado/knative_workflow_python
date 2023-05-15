@@ -3,8 +3,8 @@
 ## Description
 
 This example contains a simple workflow service that illustrate consecutive invocation of two knative python function calls.
-The first function  initialize a tensor of the specified size with random content using torch and return its contents
-The second performs an addition of all the element using numpy library. 
+The first function  initialize a tensor of the specified size with random content using torch and return its contents.
+The second performs an addition of all the element returned by the previous step using numpy library. 
 
 ## Installing and Running
 
@@ -12,7 +12,6 @@ The second performs an addition of all the element using numpy library.
  
 You will need:
   - Java 11+ installed
-  - Environment variable JAVA_HOME set accordingly
   - Maven 3.8.6+ installed
   - Docker
   - Minikube
@@ -64,13 +63,7 @@ Open a terminal, go to test directory and type
 kn func build
 ```
 
-You can verify that the image is within docker by 
-
-```
-docker images
-```
-
-Once finish, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
+Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
 
 ```
 minikube image load dev.local/test -p knative
@@ -91,13 +84,7 @@ Open a terminal, go to test directory and type
 kn func build
 ```
 
-You can verify that the image is within docker by 
-
-```
-docker images
-```
-
-Once finish, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
+Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
 
 ```
 minikube image load dev.local/receiver -p knative
@@ -110,10 +97,7 @@ Now run that image as a knative service called test
 kn service create test --image=dev.local/receiver --pull-policy=IfNotPresent
 ```
 
-
-### Compile and Deploy Knative function receiver
-
-### Submit a request
+### Run Serverless Workflow
 
 To invoke the flow, you need to specify the x and y dimension of the tensor. 
 
@@ -125,7 +109,3 @@ The result is a float number with the sum of the randomly generated matrix.
 ```
 {"id":"e80c8f2f-3753-45f0-b477-15812a3fe982","workflowdata":6.1767255663871765}
 ```
-
-
-
-
