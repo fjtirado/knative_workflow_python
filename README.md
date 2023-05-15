@@ -17,44 +17,6 @@ You will need:
   - Minikube
   - Knative CLI
 
-When using native image compilation, you will also need: 
-  - [GraalVm](https://www.graalvm.org/downloads/) 19.3.1+ installed
-  - Environment variable GRAALVM_HOME set accordingly
-  - Note that GraalVM native image compilation typically requires other packages (glibc-devel, zlib-devel and gcc) to be installed too.  You also need 'native-image' installed in GraalVM (using 'gu install native-image'). Please refer to [GraalVM installation documentation](https://www.graalvm.org/docs/reference-manual/aot-compilation/#prerequisites) for more details.
-
-### Compile and Run in Local Dev Mode
-
-```sh
-mvn clean package quarkus:dev
-```
-
-### Compile and Run in JVM mode
-
-```sh
-mvn clean package 
-java -jar target/quarkus-app/quarkus-run.jar
-```
-
-or on windows
-
-```sh
-mvn clean package
-java -jar target\quarkus-app\quarkus-run.jar
-```
-
-### Compile and Run using Local Native Image
-Note that this requires GRAALVM_HOME to point to a valid GraalVM installation
-
-```sh
-mvn clean package -Pnative
-```
-  
-To run the generated native executable, generated in `target/`, execute
-
-```sh
-./target/serverless-workflow-knative-python-quarkus-{version}-runner
-```
-
 ### Compile and Deploy Knative function test
 
 Open a terminal, go to test directory and type
@@ -91,18 +53,30 @@ minikube image load dev.local/receiver -p knative
 ```
 to load the image from your local docker into minikube registry
 
-Now run that image as a knative service called test
+Now run that image as a knative service called receiver
 
 ```
-kn service create test --image=dev.local/receiver --pull-policy=IfNotPresent
+kn service create receiver --image=dev.local/receiver --pull-policy=IfNotPresent
 ```
 
 ### Run Serverless Workflow
 
-To invoke the flow, you need to specify the x and y dimension of the tensor. 
+Open a terminal, go to workflow diretory and run
+```
+mvn clean package
+```
+
+Once done, your workflow service should be available in knative, you need to find out the uri
 
 ```
-curl -X POST -H 'Content-Type:application/json' -H 'Accept:application/json' -d '{"x":3,"y":3}' http://localhost:8080/TensorTest
+ kn service list | grep serverless-workflow-knative-python-quarkus
+ ```
+The URI of the service  will be the one in the second column
+ 
+To invoke the flow, you need to execute the following REST invocation, replacing the uri by the one resolved in the previous step and specifying the x and y dimension of the tensor. 
+
+```
+curl -X POST -H 'Content-Type:application/json' -H 'Accept:application/json' -d '{"x":3,"y":3}' <uri>/TensorTest
 ```
 The result is a float number with the sum of the randomly generated matrix.
  
