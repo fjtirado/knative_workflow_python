@@ -25,7 +25,7 @@ Open a terminal, go to test directory and type
 kn func build
 ```
 
-Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
+Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p knative`) and type
 
 ```
 minikube image load dev.local/test -p knative
@@ -61,7 +61,8 @@ kn service create receiver --image=dev.local/receiver --pull-policy=IfNotPresent
 
 ### Run Serverless Workflow
 
-Open a terminal, go to workflow diretory and run
+Open a terminal, go to workflow directory and run
+
 ```
 mvn clean package
 ```
