@@ -2,7 +2,6 @@
 id: TensorTest
 name: Workflow Knative example
 description: An example of how to invoke two python functions
-version: 1.0
 start: buildTensor
 functions:
 - name: initTensor
@@ -20,7 +19,7 @@ states:
       refName: initTensor
       arguments:
         x: .x
-        "y": .y
+        y: .y
       invoke: sync
   - functionRef:
       refName: printMessage
@@ -31,7 +30,9 @@ states:
   type: operation
   transition: receiveTensor
 - actions:
-  - functionRef: receiveData
+  - functionRef: 
+      refName: receiveData
+      arguments: .response
   name: receiveTensor
   type: operation
   end: true
