@@ -1,0 +1,39 @@
+---
+id: TensorTest
+name: Workflow Knative example
+description: An example of how to invoke two python functions
+version: 1.0
+start: buildTensor
+functions:
+- name: initTensor
+  operation: knative:services.v1.serving.knative.dev/test
+  type: custom
+- name: receiveData
+  operation: knative:services.v1.serving.knative.dev/receiver
+  type: custom
+- name: printMessage
+  operation: sysout
+  type: custom
+states:
+- actions:
+  - functionRef:
+      refName: initTensor
+      arguments:
+        x: .x
+        "y": .y
+      invoke: sync
+  - functionRef:
+      refName: printMessage
+      arguments:
+        message: '"Response is \(.response)"'
+      invoke: sync
+  name: buildTensor
+  type: operation
+  transition: receiveTensor
+- actions:
+  - functionRef: receiveData
+  name: receiveTensor
+  type: operation
+  end: true
+  stateDataFilter:
+    output: .result

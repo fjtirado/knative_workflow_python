@@ -25,12 +25,13 @@ Open a terminal, go to test directory and type
 kn func build
 ```
 
-Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p knative`) and type
+Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile` and configure the tunnel running `minikube tunnel --profile knative`)
+
+Once minikube is running, to load the image from your local docker into minikube registry type in a terminal
 
 ```
 minikube image load dev.local/test -p knative
 ```
-to load the image from your local docker into minikube registry
 
 Now run that image as a knative service called test
 
@@ -46,12 +47,13 @@ Open a terminal, go to test directory and type
 kn func build
 ```
 
-Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile`) and type
+Once it finished, make sure minikube is running with knative profile activated (if you have setup it before, you just need to start minikube with `minikube start -p profile` and configure the tunnel running `minikube tunnel --profile knative`)
+
+Once minikube is running, to load the image from your local docker into minikube registry type in a terminal
 
 ```
 minikube image load dev.local/receiver -p knative
 ```
-to load the image from your local docker into minikube registry
 
 Now run that image as a knative service called receiver
 
@@ -66,6 +68,14 @@ Open a terminal, go to workflow directory and run
 ```
 mvn clean package
 ```
+
+In some terminals, you need to ensure the local image is loaded into minikube by running
+
+`minikube image load dev.local/serverless-workflow-knative-python-quarkus:1.0-SNAPSHOT -p knative`
+
+and update the service accordingly 
+
+`kn service update serverless-workflow-knative-python-quarkus  --image=dev.local/serverless-workflow-knative-python-quarkus:1.0-SNAPSHOT --pull-policy=IfNotPresent` 
 
 Once done, your workflow service should be available in knative, you need to find out the uri
 
