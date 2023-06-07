@@ -20,12 +20,10 @@ states:
       arguments:
         x: .x
         y: .y
-      invoke: sync
   - functionRef:
       refName: printMessage
       arguments:
         message: '"Response is \(.response)"'
-      invoke: sync
   name: buildTensor
   type: operation
   transition: receiveTensor
